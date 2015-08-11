@@ -1,23 +1,15 @@
 package testTheBay;
 
 import java.util.concurrent.TimeUnit;
-
-
-
-
-
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
-import java.io.File;
-import java.io.IOException;
-
+import java.io.*;
 import jxl.*; 
-import jxl.read.biff.BiffException;
-
+  
 public class testTheBay {
 	public static void main(String[] args) throws InterruptedException{
 		System.setProperty("webdriver.chrome.driver","C:\\Program Files\\chromedriver.exe");
@@ -40,33 +32,37 @@ public class testTheBay {
 	    int i;
         Sheet sheet;
         Workbook book;
-        Cell cell1,cell2;
+        Cell cell1,cell2;              
 	    
         try { 
-            //read the data file 
-            book= Workbook.getWorkbook(new File("data\\WomenNewSelect.xls"));         
-             
+        	                  
+            book= Workbook.getWorkbook(new File("data\\WomenNewSelect.xls"));
+            sheet = book.getSheet(0);            
+            int rows = sheet.getRows(); 
+            
             i=0;
-            while(true)
+            while(i < rows) 	
             {
             	sheet=book.getSheet(0); //get the first sheet
                 cell1=sheet.getCell(0,i); //get the object of ID of the selected brand
                 cell2=sheet.getCell(1,i); //get the object of selected brand name
                 String brandName = cell2.getContents(); //get the text content of the brand name 
                 
-                if("".equals(cell1.getContents())==true)   //if no ID object
-                    break;              
+               if("".equals(cell1.getContents())==true)   //if no ID object
+                    break;               
+                	
                 new Select(driver.findElement(By.name("select"))).selectByVisibleText(brandName);  
         	    Assert.assertEquals(brandName, driver.findElement(By.xpath("//div[@id='right_con']/h1")).getText());
+        	    System.out.println("Selection of " + brandName +" is verfied.");
         	    Thread.sleep(5000);               
-                i++;               
-                
+                i++;        
             }
             book.close(); 
-        }
-        
-       catch(Exception e){System.out.println(e);}
-       
+            System.out.println("----------");//a splitting line for exception
+        }    
+      catch(Exception e){System.out.println(e);}
+      System.out.println("----------");//a splitting line for exception
+      System.out.println("Test runs over");     
 	
 	}
 }

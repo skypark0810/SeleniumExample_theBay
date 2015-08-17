@@ -28,7 +28,7 @@ public class testTheBay {
 	    Thread.sleep(5000);	    
 	    action.click(firstSubMenu).perform();
       
-	    // parameterizing test for the brand name selected 
+	    // parameterizing test using data from Excel 2003  for the brand name  
 	    int i;
         Sheet sheet;
         Workbook book;
@@ -62,7 +62,7 @@ public class testTheBay {
         }    
       catch(Exception e){System.out.println(e);}
       System.out.println("----------");//a splitting line for exception
-      System.out.println("Test runs over");     
+      System.out.println("Testing of WOMEN>NEW ARRIVALS>SHOP BY BRAND runs over");     
 	
 	}
 }
